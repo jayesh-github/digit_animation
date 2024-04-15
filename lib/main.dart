@@ -1,3 +1,7 @@
+import 'dart:async';
+import 'dart:math';
+
+import 'package:animated_digit/animated_digit.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -31,6 +35,32 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  late int _randomNumber;
+  late Timer _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _generateRandomNumber();
+    // Start a timer to update the random number every second
+    _timer = Timer.periodic(const Duration(seconds: 2), (_) {
+      _generateRandomNumber();
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel(); // Cancel the timer to prevent memory leaks
+    super.dispose();
+  }
+
+  void _generateRandomNumber() {
+    setState(() {
+      // Generate a random number (between 0 and 999 for example)
+      _randomNumber = Random().nextInt(1000000);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,13 +72,21 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              'counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
+            AnimatedDigitWidget(
+              key: const Key("ads"),
+              value: _randomNumber,
+              textStyle: const TextStyle(
+                color: Colors.black,
+                fontSize: 50,
+                fontWeight: FontWeight.w500,
+                overflow: TextOverflow.ellipsis,
+              ),
+              curve: Curves.easeOutCubic,
+              duration: const Duration(milliseconds: 400),
+              enableSeparator: true,
+              separateSymbol: ",",
+              fractionDigits: 0,
+            )
           ],
         ),
       ),

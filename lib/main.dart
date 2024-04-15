@@ -76,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
               key: const Key("ads"),
               value: _randomNumber,
               textStyle: const TextStyle(
-                color: Colors.black,
+                color: Colors.purple,
                 fontSize: 50,
                 fontWeight: FontWeight.w500,
                 overflow: TextOverflow.ellipsis,

@@ -30,6 +30,8 @@ class OverviewCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AnimatedDigitController controller =
+        AnimatedDigitController(int.parse(count));
     return CustomCard(
       cardBackground: Colors.blue,
       height: height,
@@ -59,6 +61,21 @@ class OverviewCard extends StatelessWidget {
             //   ),
             // ),
             AnimatedDigitWidget(
+              controller: controller,
+              valueColors: [
+                ValueColor(
+                    condition: () {
+                      if (int.parse(count) != null) {
+                        return true;
+                      } else {
+                        return false;
+                      }
+                    },
+                    color: Colors.white)
+              ],
+              autoSize: true,
+              animateAutoSize: true,
+              boxDecoration: null,
               key: const Key("ads"),
               value: int.parse(count),
               textStyle: TextStyle(
